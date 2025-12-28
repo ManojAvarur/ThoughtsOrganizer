@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Thought\'s Organizer</string>
+    <string name="refresh_icon">Refreshes the data / UI</string>
+    <string name="filter_icon">"Opens filter pannel to apply custom filter "</string>
+</resources>
