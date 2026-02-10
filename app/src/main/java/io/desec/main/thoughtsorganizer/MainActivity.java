@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         _dropdownMenu.setVisibility(View.VISIBLE);
         Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         _dropdownMenu.startAnimation(slideDown);
+        rotateCardTopBarIcons();
         _isMenuVisible = true;
     }
 
@@ -87,7 +89,45 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onAnimationRepeat(Animation animation) {}
         });
         _dropdownMenu.startAnimation(slideUp);
+        rotateCardTopBarIcons();
         _isMenuVisible = false;
+    }
+
+    private void addAnimationToCardTopBarIcons(){
+        Animation icon2Animator = AnimationUtils.loadAnimation(this, R.anim.up_down_long_duration);
+        Animation icon1Animator = AnimationUtils.loadAnimation(this, R.anim.up_down_short_duration);
+        _scrollDownIcon2.setAnimation(icon2Animator);
+        _scrollDownIcon1.setAnimation(icon1Animator);
+    }
+
+    private void rotateCardTopBarIcons(){
+        Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if(_isMenuVisible){
+                    _scrollDownIcon1.setRotation(180f);
+                    _scrollDownIcon2.setRotation(180f);
+                } else {
+                    _scrollDownIcon1.setRotation(0);
+                    _scrollDownIcon2.setRotation(0);
+                }
+
+                _scrollDownIcon1.startAnimation(fadeIn);
+                _scrollDownIcon2.startAnimation(fadeIn);
+
+                addAnimationToCardTopBarIcons();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+            @Override
+            public void onAnimationStart(Animation animation) {}
+        });
+
+        _scrollDownIcon1.startAnimation(fadeOut);
+        _scrollDownIcon2.startAnimation(fadeOut);
     }
 
     private void loadElementsFromActivity(){
@@ -101,13 +141,6 @@ public class MainActivity extends AppCompatActivity {
         _cardTextView = findViewById(R.id.card_view_text);
         _scrollDownIcon1 = findViewById(R.id.ic_scroll_down_1);
         _scrollDownIcon2 = findViewById(R.id.ic_scroll_down_2);
-    }
-
-    private void addAnimationToCardTopBarIcons(){
-        Animation icon2Animator = AnimationUtils.loadAnimation(this, R.anim.up_down_long_duration);
-        Animation icon1Animator = AnimationUtils.loadAnimation(this, R.anim.up_down_short_duration);
-        _scrollDownIcon2.setAnimation(icon2Animator);
-        _scrollDownIcon1.setAnimation(icon1Animator);
     }
 
     private GestureDetector gestureDetectorToToggleMenubar(){
