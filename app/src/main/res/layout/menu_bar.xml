@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_bar_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="12dp"
+    app:cardElevation="8dp"
+    android:visibility="gone"
+    tools:visibility="visible"
+    app:layout_constraintTop_toTopOf="@id/main"
+    tools:context=".MainActivity"
+    >
+
+    <RelativeLayout
+        android:id="@+id/menu_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_new_btn"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/create_new"
+            app:cornerRadius="8dp"
+            app:elevation="0dp"
+            app:icon="@drawable/ic_add_24" />
+
+        <Button
+            android:id="@+id/refresh_btn"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/add_new_btn"
+            app:icon="@drawable/ic_baseline_refresh_24" />
+
+        <Button
+            android:id="@+id/filter_btn"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/refresh_btn"
+            android:enabled="false"
+            app:icon="@drawable/ic_baseline_filter_list_24"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/list_view_btn"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            app:icon="@drawable/ic_baseline_view_list_24"
+            tools:ignore="RelativeOverlap" />
+
+        <Button
+            android:id="@+id/card_view_btn"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/list_view_btn"
+            app:icon="@drawable/ic_baseline_view_array_24"
+            android:backgroundTint="?attr/colorSurfaceVariant"
+            tools:ignore="RelativeOverlap" />
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
