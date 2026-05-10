@@ -2,6 +2,8 @@ package io.desec.main.thoughtsorganizer;
 
 import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -25,15 +27,17 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 
+import io.desec.main.thoughtsorganizer.enums.IntentEnums;
+
 public class MainActivity extends AppCompatActivity {
     private MaterialCardView _dropdownMenu, _mainCardView;
-    private Button _refreshBtn, _filterBtn, _listViewBtn, _cardViewBtn;
+    private Button _refreshBtn, _filterBtn, _listViewBtn, _cardViewBtn, _addNewBtn;
     private ScrollView _cardViewScroll;
     private TextView _cardTextView;
     private ImageView _scrollDownIcon1, _scrollDownIcon2;
     private boolean _isMenuVisible = false;
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +56,23 @@ public class MainActivity extends AppCompatActivity {
 
             return insets;
         });
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         loadElementsFromActivity();
         addAnimationToCardTopBarIcons();
+        addEventListners();
+    }
+
+    private void showMenu() {
+        _dropdownMenu.setVisibility(View.VISIBLE);
+        Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        _dropdownMenu.startAnimation(slideDown);
+        rotateCardTopBarIcons();
+        _isMenuVisible = true;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void addEventListners() {
         GestureDetector gesture = gestureDetectorToToggleMenubar();
 
         _cardTextView.setOnTouchListener((v, event) -> {
@@ -68,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(v, "Testing Toast", Snackbar.LENGTH_LONG).show();
             }
         });
-    }
 
-    private void showMenu() {
-        _dropdownMenu.setVisibility(View.VISIBLE);
-        Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
-        _dropdownMenu.startAnimation(slideDown);
-        rotateCardTopBarIcons();
-        _isMenuVisible = true;
+        _addNewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent createNewThoughtIntent = new Intent(MainActivity.this, CreateNewThought.class);
+                startActivity(createNewThoughtIntent);
+            }
+        });
     }
 
     private void hideMenu() {
@@ -141,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         _cardTextView = findViewById(R.id.card_view_text);
         _scrollDownIcon1 = findViewById(R.id.ic_scroll_down_1);
         _scrollDownIcon2 = findViewById(R.id.ic_scroll_down_2);
+        _addNewBtn = findViewById(R.id.add_new_btn);
     }
 
     private GestureDetector gestureDetectorToToggleMenubar(){

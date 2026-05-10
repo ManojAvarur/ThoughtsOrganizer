@@ -3,4 +3,8 @@
     <string name="refresh_icon">Refreshes the data / UI</string>
     <string name="filter_icon">"Opens filter pannel to apply custom filter "</string>
     <string name="create_new">Create New</string>
+    <string name="create_new_thought_new">New</string>
+    <string name="create_new_thought_thought">Thought?</string>
+    <string name="create">Create</string>
+    <string name="add_your_thought">Add your thought</string>
 </resources>
